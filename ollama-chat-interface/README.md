@@ -1,47 +1,65 @@
-# Astro Starter Kit: Minimal
+# Ollama Chat Interface
 
-```sh
-npm create astro@latest -- --template minimal
+This project is a chat interface for Ollama, built with Astro and packaged in a Docker container for easy deployment.
+
+## Prerequisites
+
+- Docker
+- Kubernetes cluster (optional, for Kubernetes deployment)
+
+## Local Development
+
+1. Clone the repository:
+   ```
+   git clone <repository-url>
+   cd ollama-chat-interface
+   ```
+
+2. Install dependencies:
+   ```
+   npm install
+   ```
+
+3. Run the development server:
+   ```
+   npm run dev
+   ```
+
+4. Open `http://localhost:3000` in your browser.
+
+## Docker Deployment
+
+1. Build the Docker image:
+   ```
+   docker build -t ollama-chat-interface .
+   ```
+
+2. Run the Docker container:
+   ```
+   docker run -d -p 3000:3000 --name ollama-chat-interface ollama-chat-interface
+   ```
+
+3. Access the application at `http://localhost:3000`.
+
+To stop the container:
+```
+docker stop ollama-chat-interface
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## Kubernetes Deployment
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+1. Ensure your Kubernetes cluster is set up and `kubectl` is configured.
 
-## 🚀 Project Structure
+2. Apply the Kubernetes configurations:
+   ```
+   kubectl apply -f kubernetes-deployment.yaml
+   kubectl apply -f kubernetes-service.yaml
+   ```
 
-Inside of your Astro project, you'll see the following folders and files:
+3. Check the status of your deployment and service:
+   ```
+   kubectl get deployments
+   kubectl get services
+   ```
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+4. If using
