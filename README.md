@@ -6,6 +6,7 @@ This project is a chat interface for Ollama, built with Astro and packaged in a 
 
 - Docker
 - Kubernetes cluster (optional, for Kubernetes deployment)
+- Local node environment
 
 ## Local Development
 
@@ -14,6 +15,12 @@ This project is a chat interface for Ollama, built with Astro and packaged in a 
    git clone <repository-url>
    cd ollama-chat-interface
    ```
+2. Create and activate node environment
+
+   ```
+   ./create-nodeenv.sh
+   .source local-ollama-nodeenv/bin/activate    
+    ```
 
 2. Install dependencies:
    ```
@@ -28,6 +35,8 @@ This project is a chat interface for Ollama, built with Astro and packaged in a 
 4. Open `http://localhost:3000` in your browser.
 
 ## Docker Deployment
+
+You can use the docker-build-image.sh docker-run-container-sh and docker-stop-container.sh or do it manually:
 
 1. Build the Docker image:
    ```
@@ -49,6 +58,8 @@ docker stop ollama-chat-interface
 ## Kubernetes Deployment
 
 1. Ensure your Kubernetes cluster is set up and `kubectl` is configured.
+
+You can use the kubernetes-apply-manifest.sh or run manually:
 
 2. Apply the Kubernetes configurations:
    ```
