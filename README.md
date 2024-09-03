@@ -2,6 +2,9 @@
 
 This project is a chat interface for Ollama, built with Astro and packaged in a Docker container for easy deployment.
 
+![Ollama Chat Interface Screenshot](screenshot.png)
+
+
 ## Prerequisites
 
 - Docker
