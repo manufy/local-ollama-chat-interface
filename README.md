@@ -75,5 +75,3 @@ You can use the kubernetes-apply-manifest.sh or run manually:
    kubectl get deployments
    kubectl get services
    ```
-
-4. If using
