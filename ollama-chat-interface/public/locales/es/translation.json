@@ -1,0 +1,15 @@
+{
+  "title": "Interfaz de Chat Ollama",
+  "site": {
+    "lang": "es",
+    "title": "Interfaz de Chat Ollama",
+    "toggle_dark_mode": "Modo oscuro",
+    "toggle_light_mode": "Modo claro"
+  },
+  "index": {
+    "welcome": "Bienvenido",
+    "send_button": "Enviar",
+    "send_placeholder": "Escribe un mensaje",
+    "text_thinking": "Pensando..."
+  }
+}

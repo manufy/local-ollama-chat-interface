@@ -1,0 +1,15 @@
+{
+  "title": "Ollama Chat Interface",
+  "site": {
+    "lang": "en",
+    "title": "Ollama Chat Interface",
+    "toggle_dark_mode": "Dark Mode",
+    "toggle_light_mode": "Light Mode"
+  },
+  "index": {
+    "welcome": "Welcome",
+    "send_button": "Send",
+    "send_placeholder": "Send a message",
+    "text_thinking": "Thinking..."
+  }
+}

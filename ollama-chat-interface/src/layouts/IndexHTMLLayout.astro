@@ -1,0 +1,23 @@
+---
+import { t } from "i18next";
+import i18next from "i18next";
+import { changeLanguage } from "i18next";
+import IndexHeadLayout from "./IndexHeadLayout.astro";
+import IndexBodyLayout from "./IndexBodyLayout.astro";
+
+// Extract language code from URL pathname and set as i18next language
+
+const lang = Astro.url.pathname.split('/')[1] || 'en';
+await changeLanguage(lang);
+
+console.log("IndexHTMLLayout i18next languages:", i18next.languages);
+console.log("IndexHTMLLayout i18next current language:", i18next.language);
+console.log("IndexHTMLLayout Page language:", i18next.language);
+console.log("IndexHTMLLayout Astro.url.pathname:", Astro.url.pathname);
+console.log("IndexHTMLLayout Title:",  t("title"));
+---
+
+<html lang={i18next.language}>
+  <IndexHeadLayout title={t("site.title")} />
+  <IndexBodyLayout  />
+</html>

@@ -1,114 +1,125 @@
 ---
-// You can add any imports here if needed
-import React, { useState } from 'react';
+import { t } from "i18next";
 ---
 
 <div class="space-y-4">
-  <div id="messages" class="flex flex-col space-y-4">
-    <!-- Messages will be dynamically inserted here -->
-  </div>
-  <div id="thinking" class="flex justify-start hidden">
-    <div class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white max-w-[70%] rounded-lg p-3">
-      Thinking...
+    <div id="messages" class="flex flex-col space-y-4">
+        <!-- Messages will be dynamically inserted here -->
     </div>
-  </div>
-  <form id="chat-form" class="border-t dark:border-gray-700 pt-4 flex">
-    <input
-      id="chat-input"
-      class="flex-grow p-2 rounded-l-lg border dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-      placeholder="Type a message..."
-    />
-    <button
-      type="submit"
-      class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    >
-      Send
-    </button>
-  </form>
+    <div id="thinking" class="flex justify-start hidden">
+        <div
+            class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white max-w-[70%] rounded-lg p-3"
+        >
+            {t("index.text_thinking")}
+        </div>
+    </div>
+    <form id="chat-form" class="border-t dark:border-gray-700 pt-4 flex">
+        <input
+            id="chat-input"
+            class="flex-grow p-2 rounded-l-lg border dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder={t("index.send_placeholder")}
+        />
+        <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+            {t("index.send_button")}
+        </button>
+    </form>
 </div>
 
 <script>
-  interface Message {
-    role: 'user' | 'assistant';
-    content: string;
-  }
-
-  let messages: Message[] = [];
-  const messagesContainer = document.getElementById('messages');
-  const thinkingIndicator = document.getElementById('thinking');
-  const form = document.getElementById('chat-form') as HTMLFormElement;
-  const input = document.getElementById('chat-input') as HTMLInputElement;
-
-  form.addEventListener('submit', handleSubmit);
-
-  async function handleSubmit(e: Event) {
-    e.preventDefault();
-    const inputValue = input.value.trim();
-    if (inputValue) {
-      const userMessage: Message = { role: 'user', content: inputValue };
-      messages.push(userMessage);
-      input.value = '';
-      renderMessages();
-      showThinking(true);
-
-      try {
-        console.log('Sending request to Ollama...');
-        const response = await fetch('http://localhost:11434/api/generate', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'llama3',
-            prompt: inputValue,
-            stream: false,
-          }),
-        });
-
-        console.log('Response status:', response.status);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('Received data:', data);
-        const assistantMessage: Message = { role: 'assistant', content: data.response };
-        messages.push(assistantMessage);
-      } catch (error: unknown) {
-        console.error('Detailed error:', error);
-        const errorMessage: Message = { 
-          role: 'assistant', 
-          content: `Error: ${error instanceof Error ? error.message : 'Unknown error'}`
-        };
-        messages.push(errorMessage);
-      } finally {
-        showThinking(false);
-        renderMessages();
-      }
+    interface Message {
+        role: "user" | "assistant";
+        content: string;
     }
-  }
 
-  function renderMessages() {
-    if (messagesContainer) {
-      messagesContainer.innerHTML = messages.map((message, index) => `
-        <div key="${index}" class="flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}">
+    let messages: Message[] = [];
+    const messagesContainer = document.getElementById("messages");
+    const thinkingIndicator = document.getElementById("thinking");
+    const form = document.getElementById("chat-form") as HTMLFormElement;
+    const input = document.getElementById("chat-input") as HTMLInputElement;
+
+    form.addEventListener("submit", handleSubmit);
+
+    async function handleSubmit(e: Event) {
+        e.preventDefault();
+        const inputValue = input.value.trim();
+        if (inputValue) {
+            const userMessage: Message = { role: "user", content: inputValue };
+            messages.push(userMessage);
+            input.value = "";
+            renderMessages();
+            showThinking(true);
+
+            try {
+                console.log("Sending request to Ollama...");
+                const response = await fetch(
+                    "http://localhost:11434/api/generate",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            model: "llama3",
+                            prompt: inputValue,
+                            stream: false,
+                        }),
+                    },
+                );
+
+                console.log("Response status:", response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log("Received data:", data);
+                const assistantMessage: Message = {
+                    role: "assistant",
+                    content: data.response,
+                };
+                messages.push(assistantMessage);
+            } catch (error: unknown) {
+                console.error("Detailed error:", error);
+                const errorMessage: Message = {
+                    role: "assistant",
+                    content: `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+                };
+                messages.push(errorMessage);
+            } finally {
+                showThinking(false);
+                renderMessages();
+            }
+        }
+    }
+
+    function renderMessages() {
+        if (messagesContainer) {
+            messagesContainer.innerHTML = messages
+                .map(
+                    (message, index) => `
+        <div key="${index}" class="flex ${message.role === "user" ? "justify-end" : "justify-start"}">
           <div class="max-w-[70%] rounded-lg p-3 ${
-            message.role === 'user' 
-              ? 'bg-blue-500 text-white' 
-              : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white'
+              message.role === "user"
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white"
           }">
             ${message.content}
           </div>
         </div>
-      `).join('');
+      `,
+                )
+                .join("");
 
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
     }
-  }
 
-  function showThinking(show: boolean) {
-    if (thinkingIndicator) {
-      thinkingIndicator.classList.toggle('hidden', !show);
+    function showThinking(show: boolean) {
+        if (thinkingIndicator) {
+            thinkingIndicator.classList.toggle("hidden", !show);
+        }
     }
-  }
 </script>
